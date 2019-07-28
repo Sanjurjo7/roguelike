@@ -50,6 +50,9 @@ def handle_player_turn_keys(key):
     elif key_char == 'd':
         return {'drop_inventory': True}
 
+    elif key.vk == libtcod.KEY_ENTER:
+        return {'take_stairs': True}
+
     if key.vk == libtcod.KEY_ENTER and key.lalt:
         # Alt+Enter: toggle full screen
         return {'fullscreen': True}
@@ -87,6 +90,18 @@ def handle_inventory_keys(key):
         return {'fullscreen': True}
     elif key.vk == libtcod.KEY_ESCAPE:
         # Exit the menu
+        return {'exit': True}
+
+    return {}
+
+def handle_main_menu(key):
+    key_char = chr(key.c)
+
+    if key_char == 'a':
+        return {'new_game': True}
+    elif key_char == 'b':
+        return {'load_game': True}
+    elif key_char == 'c' or key.vk == libtcod.KEY_ESCAPE:
         return {'exit': True}
 
     return {}
