@@ -182,13 +182,13 @@ class GameMap:
                             render_order=RenderOrder.ITEM, item=item_component)
 
                 elif item_choice == 'dirk':
-                    item_component = Equippable(EquipmentSlots.OFF_HAND, power_bonus=1, defense_bonus=1)
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, power_bonus=1, defense_bonus=1)
                     item = Entity(x, y, '-', libtcod.sky, 'Dirk', equippable=equippable_component)
                 elif item_choice == 'sword':
-                    item_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
+                    equippable_component = Equippable(EquipmentSlots.MAIN_HAND, power_bonus=3)
                     item = Entity(x, y, '/', libtcod.sky, 'Sword', equippable=equippable_component)
                 elif item_choice == 'shield':
-                    item_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=2)
+                    equippable_component = Equippable(EquipmentSlots.OFF_HAND, defense_bonus=2)
                     item = Entity(x, y, '[', libtcod.darker_orange, 'Shield', equippable=equippable_component)
 
                 elif item_choice == 'fireball_scroll':

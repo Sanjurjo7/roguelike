@@ -35,7 +35,7 @@ class Fighter:
         else:
             bonus = 0
 
-        return self.base_power + bonus
+        return self.base_defense + bonus
 
     def take_damage(self, amount):
         results = []
