@@ -13,7 +13,7 @@ class Level:
         self.current_xp += xp
 
         if self.current_xp > self.experience_to_next_level:
-            self.current_x -= self.expreience_to_next_level
+            self.current_xp -= self.experience_to_next_level
             self.current_level += 1
             
             return True
