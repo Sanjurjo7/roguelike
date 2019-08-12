@@ -7,6 +7,7 @@ from game_states import GameStates
 from menus import character_screen, inventory_menu, level_up_menu
 
 class RenderOrder(Enum):
+
     STAIRS = 1
     CORPSE = 2
     ITEM = 3
@@ -42,7 +43,15 @@ def render_bar(panel, x, y, total_width, name,
 
 def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute, 
         message_log, screen_width, screen_height, bar_width, panel_height,
-        panel_y, mouse, colors, game_state):
+        panel_y, mouse, game_state):
+    colors = {
+            'dark_wall': libtcod.Color(20, 20, 60),
+            'dark_ground': libtcod.Color(60, 60, 130),
+            'light_wall': libtcod.Color(120, 100, 740),
+            'light_ground': libtcod.Color(190, 170, 70)
+    }
+
+
     # Draw all the tiles in the game map
     if fov_recompute:
         for y in range(game_map.height):
@@ -53,19 +62,19 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute,
                 if visible:
                     if wall:
                         libtcod.console_set_char_background(con, x, y,
-                                colors.get('light_wall'), libtcod.BKGND_SET)
+                                colors['light_wall'], libtcod.BKGND_SET)
                     else:
                         libtcod.console_set_char_background(con, x, y,
-                                colors.get('light_ground'), libtcod.BKGND_SET)
+                                colors['light_ground'], libtcod.BKGND_SET)
                     game_map.tiles[x][y].explored = True
 
                 elif game_map.tiles[x][y].explored:
                     if wall:
                         libtcod.console_set_char_background(con, x, y,
-                                colors.get('dark_wall'), libtcod.BKGND_SET)
+                                colors['dark_wall'], libtcod.BKGND_SET)
                     else:
                         libtcod.console_set_char_background(con, x, y,
-                                colors.get('dark_ground'), libtcod.BKGND_SET)
+                                colors['dark_ground'], libtcod.BKGND_SET)
 
     entities_in_render_order = sorted(entities,
             key=lambda x: x.render_order.value)
@@ -82,6 +91,8 @@ def render_all(con, panel, entities, player, game_map, fov_map, fov_recompute,
     # Print the game messages, one line at a time
     y = 1
     for message in message_log.messages:
+        ## TODO: pull message function in here so that colors manage locally
+        ## HINT: message.color needs to be abstracted
         libtcod.console_set_default_foreground(panel, message.color)
         libtcod.console_print_ex(panel, message_log.x, y, libtcod.BKGND_NONE,
                 libtcod.LEFT, message.text)
@@ -118,6 +129,7 @@ def clear_all(con, entities):
         clear_entity(con, entity)
 
 def draw_entity(con, entity, fov_map, game_map):
+    ## TODO: Entitiy colors should be handled internally here.
     if libtcod.map_is_in_fov(fov_map, entity.x, entity.y) or (entity.stairs and game_map.tiles[entity.x][entity.y].explored):
         libtcod.console_set_default_foreground(con, entity.color)
         libtcod.console_put_char(con, entity.x, entity.y,

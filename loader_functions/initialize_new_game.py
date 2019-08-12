@@ -41,13 +41,6 @@ def get_constants():
     fov_light_walls = True
     fov_radius = 10
 
-    colors = {
-            'dark_wall': libtcod.Color(20, 20, 60),
-            'dark_ground': libtcod.Color(60, 60, 130),
-            'light_wall': libtcod.Color(120, 100, 740),
-            'light_ground': libtcod.Color(190, 170, 70)
-    }
-
     constants = {
             'window_title': window_title,
             'screen_width': screen_width,
@@ -66,7 +59,6 @@ def get_constants():
             'fov_algorithm': fov_algorithm,
             'fov_light_walls': fov_light_walls,
             'fov_radius': fov_radius,
-            'colors': colors
     }
 
     return constants
